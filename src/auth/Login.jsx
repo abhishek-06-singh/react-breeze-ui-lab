@@ -58,8 +58,8 @@ const Login = () => {
             alt="logo"
           />
         </div>
-        <div className="flex flex-col items-center justify-center mt-4 sm:mt-10">
-          <form className="w-full max-w-[400px] bg-gray-700 p-10 rounded-md mx-auto">
+        <div className="flex flex-col items-center justify-center  sm:mt-10">
+          <form className="w-full max-w-[400px] bg-gray-700 p-10 rounded-md mx-auto h-[450px]">
             <div className="text-md mb-4">
               <h2 className="text-3xl font-bold">Log In</h2>
               New to ReactBreeze?{" "}
@@ -84,6 +84,7 @@ const Login = () => {
               <input
                 type="email"
                 id="username"
+                placeholder="Enter your email"
                 name="username"
                 value={formData.username}
                 onChange={handleInputChange}
@@ -96,6 +97,7 @@ const Login = () => {
                 <input
                   type={passwordVisible ? "text" : "password"}
                   id="password"
+                  placeholder="Enter your password"
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}

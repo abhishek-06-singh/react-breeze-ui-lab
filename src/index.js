@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import Hero from "./components/Hero";
+
 import Login from "./auth/Login";
+import Home from "./components/Home";
 
 const appRouter = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Hero />,
+        element: <Home />,
       },
     ],
   },
