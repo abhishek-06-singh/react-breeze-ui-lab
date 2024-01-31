@@ -1,18 +1,17 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import LogoPage from "./components/LogoPage";
+import SignIn from "./components/SignIn";
 
-import Login from "./auth/Login";
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      {/* <Navbar /> */}
-      <Outlet />
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LogoPage />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
