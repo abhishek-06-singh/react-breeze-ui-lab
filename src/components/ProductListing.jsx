@@ -6,6 +6,7 @@ import Perks from "./Perks";
 import Footer from "./Footer";
 import { FaStar } from "react-icons/fa";
 import Offers from "./smallComponents/Offers";
+import ShimmerLoader from "./shimmerUi/ShimmerLoader";
 const ProductListing = () => {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,7 @@ const ProductListing = () => {
           Products.
         </h1>
         {loading ? (
-          <p>Loading...</p>
+          <ShimmerLoader />
         ) : (
           <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
