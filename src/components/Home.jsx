@@ -18,10 +18,12 @@ import Footer from "./Footer";
 import Perks from "./Perks";
 import Trending from "./Trending";
 import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const email = useSelector(selectEmail);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <div className="bg-white">
       <Header />
@@ -63,12 +65,12 @@ const Home = () => {
                 Mid-Season Sale
               </h1>
               <div className="mt-4 sm:mt-6">
-                <a
-                  href="#"
-                  className="inline-block rounded-md border border-transparent bg-cyan-600 px-8 py-3 font-medium text-white hover:bg-cyan-700"
+                <span
+                  onClick={() => navigate("/products")}
+                  className="inline-block rounded-md border border-transparent bg-cyan-600 px-8 py-3 font-medium text-white hover:bg-cyan-700 cursor-pointer"
                 >
                   Shop Collection
-                </a>
+                </span>
               </div>
             </div>
           </div>

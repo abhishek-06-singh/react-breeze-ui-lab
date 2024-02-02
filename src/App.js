@@ -5,6 +5,7 @@ import SignIn from "./components/SignIn";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import Home from "./components/Home";
+import ProductListing from "./components/ProductListing";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/landing" element={<LogoPage />} />
           <Route path="/" element={<SignIn />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/products" element={<ProductListing />} />
         </Routes>
       </Router>
     </Provider>

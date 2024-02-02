@@ -14,6 +14,7 @@ import {
   selectPassword,
 } from "../store/authSlice";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const navigation = {
   categories: [
     {
@@ -99,6 +100,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Header = () => {
+  const navigate = useNavigate();
   const email = useSelector(selectEmail);
   const [open, setOpen] = useState(false);
   return (
@@ -239,10 +241,10 @@ const Header = () => {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex h-16 items-center justify-between">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center">
-                  <a href="#">
+                  <span onClick={() => navigate("/home")}>
                     <span className="sr-only">Your Company</span>
                     <img className="h-12 w-auto" src={blackimage} alt="" />
-                  </a>
+                  </span>
                 </div>
 
                 <div className="hidden h-full lg:flex">
@@ -378,10 +380,10 @@ const Header = () => {
                 </div>
 
                 {/* Logo (lg-) */}
-                <a href="#" className="lg:hidden">
+                <span className="lg:hidden" onClick={() => navigate("/home")}>
                   <span className="sr-only">Your Company</span>
                   <img src={blackimage} alt="" className="h-8 w-auto" />
-                </a>
+                </span>
 
                 <div className="flex flex-1 items-center justify-end">
                   <a
