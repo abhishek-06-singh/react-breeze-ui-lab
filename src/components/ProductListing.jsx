@@ -5,6 +5,7 @@ import Stats from "./smallComponents/Stats";
 import Perks from "./Perks";
 import Footer from "./Footer";
 import { FaStar } from "react-icons/fa";
+import Offers from "./smallComponents/Offers";
 const ProductListing = () => {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,6 +73,7 @@ const ProductListing = () => {
           </div>
         )}
       </div>
+      <Offers />
       <Perks />
       <Footer />
     </>
