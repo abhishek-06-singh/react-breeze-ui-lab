@@ -8,10 +8,25 @@ import Home from "./components/Home";
 import ProductListing from "./components/ProductListing";
 import ProductOverview from "./components/ProductOverview";
 import ShoppingBag from "./components/shopping/ShoppingBag";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Checkout from "./components/shopping/Checkout";
 
 const App = () => {
   return (
     <Provider store={store}>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Router>
         <Routes>
           <Route path="/landing" element={<LogoPage />} />
@@ -20,6 +35,7 @@ const App = () => {
           <Route path="/products" element={<ProductListing />} />
           <Route path="/product-overview/:id" element={<ProductOverview />} />
           <Route path="/bag" element={<ShoppingBag />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </Router>
     </Provider>

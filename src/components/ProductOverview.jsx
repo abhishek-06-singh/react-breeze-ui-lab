@@ -11,6 +11,8 @@ import { IoShieldCheckmark } from "react-icons/io5";
 import ShimmerLoaderSingle from "./shimmerUi/ShimmerLoaderSingle";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductOverview = () => {
   const { id } = useParams();
@@ -35,6 +37,7 @@ const ProductOverview = () => {
     fetchProduct();
   }, [id]);
   const handleAddToCart = (event) => {
+    toast.success("Item added to cart");
     event.preventDefault(); // Prevents the default form submission behavior
     dispatch(addToCart(product));
   };

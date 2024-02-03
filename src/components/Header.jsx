@@ -471,7 +471,7 @@ const Header = () => {
                             </ul>
 
                             <button
-                              type="submit"
+                              onClick={() => navigate("/checkout")}
                               className="w-full rounded-md border border-transparent bg-cyan-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                             >
                               Checkout
