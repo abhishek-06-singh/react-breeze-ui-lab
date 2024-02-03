@@ -5,6 +5,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa";
 import { IoMdArchive } from "react-icons/io";
+import { useSelector } from "react-redux";
 import blackimage from "../assets/white.png";
 import Collection from "./Collection ";
 import {
@@ -13,7 +14,7 @@ import {
   selectEmail,
   selectPassword,
 } from "../store/authSlice";
-import { useSelector } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 const navigation = {
   categories: [
@@ -93,16 +94,20 @@ const navigation = {
   ],
   pages: [
     { name: "Electronics", href: "#" },
-    { name: "Jewelery", href: "#" },
+    { name: "Shopping Bag", href: "/bag" },
   ],
 };
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
 const Header = () => {
   const navigate = useNavigate();
   const email = useSelector(selectEmail);
   const [open, setOpen] = useState(false);
+  const cartItemsCount = useSelector((state) => state.cart.totalItems);
+  const cartItems = useSelector((state) => state.cart.items);
+
   return (
     <>
       <Transition.Root show={open} as={Fragment}>
@@ -203,16 +208,17 @@ const Header = () => {
                 </Tab.Group>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  {navigation.pages.map((page) => (
-                    <div key={page.name} className="flow-root">
-                      <a
-                        href={page.href}
-                        className="-m-2 block p-2 font-medium text-gray-900"
-                      >
-                        {page.name}
-                      </a>
-                    </div>
-                  ))}
+                  <div className="flow-root">
+                    <span className="-m-2 block p-2 font-medium text-gray-900">
+                      Electronics
+                    </span>
+                    <span
+                      className="-m-2 block p-2 font-medium text-gray-900"
+                      onClick={() => navigate("/bag")}
+                    >
+                      Shopping bag
+                    </span>
+                  </div>
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
@@ -345,15 +351,15 @@ const Header = () => {
                         </Popover>
                       ))}
 
-                      {navigation.pages.map((page) => (
-                        <a
-                          key={page.name}
-                          href={page.href}
-                          className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                        >
-                          {page.name}
-                        </a>
-                      ))}
+                      <span className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Electronics
+                      </span>
+                      <span
+                        className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                        onClick={() => navigate("/bag")}
+                      >
+                        Shopping Bag
+                      </span>
                     </div>
                   </Popover.Group>
                 </div>
@@ -386,13 +392,6 @@ const Header = () => {
                 </span>
 
                 <div className="flex flex-1 items-center justify-end">
-                  <a
-                    href="#"
-                    className="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block"
-                  >
-                    Search
-                  </a>
-
                   <div className="flex items-center lg:ml-8">
                     {/* Help */}
                     <a
@@ -413,18 +412,83 @@ const Header = () => {
                     </a>
 
                     {/* Cart */}
-                    <div className="ml-4 flow-root lg:ml-8">
-                      <a href="#" className="group -m-2 flex items-center p-2">
-                        <FaBagShopping
-                          className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                          aria-hidden="true"
-                        />
-                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                          0
-                        </span>
-                        <span className="sr-only">items in cart, view bag</span>
-                      </a>
-                    </div>
+
+                    <Popover className="ml-4 flow-root text-sm lg:relative lg:ml-8 z-50">
+                      <Popover.Button className="group -m-2 flex items-center p-2">
+                        <a
+                          href="#"
+                          className="group -m-2 flex items-center p-2"
+                        >
+                          <FaBagShopping
+                            className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                            {cartItemsCount}
+                          </span>
+                          <span className="sr-only">
+                            items in cart, view bag
+                          </span>
+                        </a>
+                      </Popover.Button>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Popover.Panel className="absolute inset-x-0 top-16 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
+                          <h2 className="sr-only">Shopping Cart</h2>
+
+                          <form className="mx-auto max-w-2xl px-4">
+                            <ul
+                              role="list"
+                              className="divide-y divide-gray-200"
+                            >
+                              {cartItems.map((item) => (
+                                <li
+                                  key={cartItems.id}
+                                  className="flex items-center py-6"
+                                >
+                                  <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    className="h-16 w-16 flex-none rounded-md border border-gray-200"
+                                  />
+                                  <div className="ml-4 flex-auto">
+                                    <h3 className="font-medium text-gray-900">
+                                      {item.title}
+                                    </h3>
+                                    <p className="text-gray-500">
+                                      ${item.price}
+                                    </p>
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+
+                            <button
+                              type="submit"
+                              className="w-full rounded-md border border-transparent bg-cyan-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                            >
+                              Checkout
+                            </button>
+
+                            <p className="mt-6 text-center">
+                              <span
+                                onClick={() => navigate("/bag")}
+                                className="text-sm font-medium text-cyan-600 hover:text-cyan-500"
+                              >
+                                View Shopping Bag
+                              </span>
+                            </p>
+                          </form>
+                        </Popover.Panel>
+                      </Transition>
+                    </Popover>
                   </div>
                 </div>
               </div>

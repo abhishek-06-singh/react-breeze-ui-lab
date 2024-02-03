@@ -7,6 +7,7 @@ import store from "./store/store";
 import Home from "./components/Home";
 import ProductListing from "./components/ProductListing";
 import ProductOverview from "./components/ProductOverview";
+import ShoppingBag from "./components/shopping/ShoppingBag";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/products" element={<ProductListing />} />
           <Route path="/product-overview/:id" element={<ProductOverview />} />
+          <Route path="/bag" element={<ShoppingBag />} />
         </Routes>
       </Router>
     </Provider>

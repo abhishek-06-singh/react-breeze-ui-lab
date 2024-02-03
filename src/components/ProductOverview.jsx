@@ -9,11 +9,13 @@ import { FaCheck, FaQuestionCircle, FaStar } from "react-icons/fa";
 import { RadioGroup } from "@headlessui/react";
 import { IoShieldCheckmark } from "react-icons/io5";
 import ShimmerLoaderSingle from "./shimmerUi/ShimmerLoaderSingle";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 
 const ProductOverview = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +34,10 @@ const ProductOverview = () => {
 
     fetchProduct();
   }, [id]);
+  const handleAddToCart = (event) => {
+    event.preventDefault(); // Prevents the default form submission behavior
+    dispatch(addToCart(product));
+  };
 
   return (
     <div>
@@ -116,7 +122,7 @@ const ProductOverview = () => {
                   <form>
                     <div className="mt-10">
                       <button
-                        type="submit"
+                        onClick={handleAddToCart}
                         className="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                       >
                         Add to bag
