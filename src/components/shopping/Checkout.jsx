@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { removeFromCart, clearCart } from "../../store/cartSlice";
+import { calculateOrderSummary } from "../../store/orderSummarySlice";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -23,6 +25,14 @@ const Checkout = () => {
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const [validationErrors, setValidationErrors] = useState({
+    email: "",
+    nameOnCard: "",
+    cardNumber: "",
+    expirationDate: "",
+    cvc: "",
+  });
 
   const subtotal = cartItems.reduce(
     (total, item) => total + item.quantity * item.price,
@@ -48,24 +58,51 @@ const Checkout = () => {
       ...formData,
       [name]: value,
     });
+
+    setValidationErrors({
+      ...validationErrors,
+      [name]: "",
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (isFormValid) {
-      // Add your form submission logic here
-      // For example, showing a success toast
-      toast.success("Form submitted successfully!");
+    const isValid =
+      formData.email !== "" &&
+      formData.nameOnCard !== "" &&
+      formData.cardNumber !== "" &&
+      formData.expirationDate !== "" &&
+      formData.cvc !== "";
+
+    setIsFormValid(isValid);
+
+    if (isValid) {
+      dispatch(calculateOrderSummary({ cartItems: cartItems }));
+
+      dispatch(clearCart());
+
+      toast.success("Order placed successfully!");
+
       setTimeout(() => {
-        navigate("/home");
+        navigate("/order-summary");
       }, 2000);
     } else {
-      // Showing an error toast for invalid form
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        email: formData.email === "" ? "Email is required." : "",
+        nameOnCard:
+          formData.nameOnCard === "" ? "Name on card is required." : "",
+        cardNumber:
+          formData.cardNumber === "" ? "Card number is required." : "",
+        expirationDate:
+          formData.expirationDate === "" ? "Expiration date is required." : "",
+        cvc: formData.cvc === "" ? "CVC is required." : "",
+      }));
+
       toast.error("Please fill in all the required fields.");
     }
   };
-
   return (
     <div className="bg-white">
       <div
@@ -143,7 +180,7 @@ const Checkout = () => {
                   <Popover.Button className="flex w-full items-center py-6 font-medium">
                     <span className="mr-auto text-base">Total</span>
                     <span className="mr-2 text-base">
-                      ${subtotal.toFixed(2)}
+                      ${(subtotal + taxCharge + shippingCharge).toFixed(2)}
                     </span>
                     <FaChevronCircleUp
                       className="h-5 w-5 text-gray-500"
@@ -229,8 +266,15 @@ const Checkout = () => {
                     autoComplete="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50"
+                    className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50 ${
+                      validationErrors.email ? "border-red-500" : ""
+                    }`}
                   />
+                  {validationErrors.email && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {validationErrors.email}
+                    </p>
+                  )}
                 </div>
               </div>
             </section>
@@ -259,8 +303,15 @@ const Checkout = () => {
                       autoComplete="cc-name"
                       value={formData.nameOnCard}
                       onChange={handleInputChange}
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50"
+                      className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50 ${
+                        validationErrors.nameOnCard ? "border-red-500" : ""
+                      }`}
                     />
+                    {validationErrors.nameOnCard && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {validationErrors.nameOnCard}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -279,8 +330,15 @@ const Checkout = () => {
                       autoComplete="cc-number"
                       value={formData.cardNumber}
                       onChange={handleInputChange}
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50"
+                      className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50 ${
+                        validationErrors.cardNumber ? "border-red-500" : ""
+                      }`}
                     />
+                    {validationErrors.cardNumber && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {validationErrors.cardNumber}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -299,8 +357,15 @@ const Checkout = () => {
                       autoComplete="cc-exp"
                       value={formData.expirationDate}
                       onChange={handleInputChange}
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50"
+                      className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50 ${
+                        validationErrors.expirationDate ? "border-red-500" : ""
+                      }`}
                     />
+                    {validationErrors.expirationDate && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {validationErrors.expirationDate}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -319,8 +384,15 @@ const Checkout = () => {
                       autoComplete="csc"
                       value={formData.cvc}
                       onChange={handleInputChange}
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50"
+                      className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm px-3 py-2 bg-gray-50 ${
+                        validationErrors.cvc ? "border-red-500" : ""
+                      }`}
                     />
+                    {validationErrors.cvc && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {validationErrors.cvc}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

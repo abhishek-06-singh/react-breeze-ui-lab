@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LogoPage from "./components/LogoPage";
 import SignIn from "./components/SignIn";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import store from "./store/store";
 import Home from "./components/Home";
 import ProductListing from "./components/ProductListing";
@@ -11,6 +12,8 @@ import ShoppingBag from "./components/shopping/ShoppingBag";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Checkout from "./components/shopping/Checkout";
+
+import OrderSummery from "./components/shopping/OrderSummery";
 
 const App = () => {
   return (
@@ -36,6 +39,7 @@ const App = () => {
           <Route path="/product-overview/:id" element={<ProductOverview />} />
           <Route path="/bag" element={<ShoppingBag />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-summary" element={<OrderSummery />} />
         </Routes>
       </Router>
     </Provider>
