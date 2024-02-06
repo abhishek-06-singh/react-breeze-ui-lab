@@ -19,10 +19,11 @@ import Perks from "./Perks";
 import Trending from "./Trending";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
+import Testemonials from "./smallComponents/Testemonials";
 
 const Home = () => {
   const email = useSelector(selectEmail);
-  const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
   return (
     <div className="bg-white">
@@ -38,7 +39,7 @@ const Home = () => {
                   className="h-full w-full object-cover object-center"
                 />
               </div>
-              <div className="absolute inset-0 bg-gray-900 opacity-50" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-950 to-pink-950 opacity-30" />
             </div>
             <div className="h-32 w-full bg-white md:h-40 lg:h-48" />
           </div>
@@ -77,7 +78,9 @@ const Home = () => {
 
           <Collection />
         </div>
+
         <Trending />
+        <Testemonials />
         <Perks />
         <Footer />
       </main>

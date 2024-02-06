@@ -1,12 +1,14 @@
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { FaCcVisa } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const OrderSummary = () => {
+  const navigate = useNavigate();
   const orderSummary = useSelector((state) => state.orderSummary);
   const subtotal = orderSummary.orderItems.reduce(
     (total, item) => total + item.quantity * item.price,
@@ -34,6 +36,13 @@ const OrderSummary = () => {
               Order #54879
             </h1>
           </div>
+          <span
+            onClick={() => navigate("/home")}
+            className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block"
+          >
+            Home page
+            <span aria-hidden="true"> &rarr;</span>
+          </span>
           <p className="text-sm text-gray-600">
             Order placed{" "}
             <time dateTime="2021-03-22" className="font-medium text-gray-900">
