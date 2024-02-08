@@ -189,8 +189,8 @@ const Header = () => {
                                   className="object-cover object-center"
                                 />
                               </div>
-                              <a
-                                href={item.href}
+                              <span
+                                onClick={() => navigate(item.href)}
                                 className="mt-6 block text-sm font-medium text-gray-900"
                               >
                                 <span
@@ -198,7 +198,7 @@ const Header = () => {
                                   aria-hidden="true"
                                 />
                                 {item.name}
-                              </a>
+                              </span>
                               <p
                                 aria-hidden="true"
                                 className="mt-1 text-sm text-gray-500"
@@ -341,8 +341,10 @@ const Header = () => {
                                                 className="object-cover object-center"
                                               />
                                             </div>
-                                            <a
-                                              href={item.href}
+                                            <span
+                                              onClick={() =>
+                                                navigate(item.href)
+                                              }
                                               className="mt-4 block font-medium text-gray-900"
                                             >
                                               <span
@@ -350,7 +352,7 @@ const Header = () => {
                                                 aria-hidden="true"
                                               />
                                               {item.name}
-                                            </a>
+                                            </span>
                                             <p
                                               aria-hidden="true"
                                               className="mt-1"
