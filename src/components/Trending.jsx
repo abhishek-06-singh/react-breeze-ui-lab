@@ -1,69 +1,88 @@
 import React from "react";
-const trendingProducts = [
+const incentives = [
   {
-    id: 1,
-    name: "Leather Long Wallet",
-    color: "Natural",
-    price: "$75",
-    href: "#",
+    name: "Free shipping",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg",
-    imageAlt: "Hand stitched, orange leather long wallet.",
+      "https://tailwindui.com/img/ecommerce/icons/icon-shipping-simple.svg",
+    description:
+      "Enjoy free shipping on all orders. No minimum purchase required.",
   },
-  // More products...
+  {
+    name: "Easy returns",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce/icons/icon-warranty-simple.svg",
+    description:
+      "Not satisfied with your purchase? No worries! Return it hassle-free within 30 days for a full refund.",
+  },
+  {
+    name: "24/7 Customer Support",
+    imageSrc:
+      "https://tailwindui.com/img/ecommerce/icons/icon-exchange-simple.svg",
+    description:
+      "Need assistance? Our dedicated customer support team is available round-the-clock to assist you with any queries or concerns.",
+  },
 ];
+
 const Trending = () => {
   return (
-    <section aria-labelledby="trending-heading">
-      <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:pt-32">
-        <div className="md:flex md:items-center md:justify-between">
-          <h2
-            id="favorites-heading"
-            className="text-2xl font-bold tracking-tight text-gray-900"
-          >
-            Trending Products
-          </h2>
-          <a
-            href="#"
-            className="hidden text-sm font-medium text-cyan-600 hover:text-cyan-500 md:block"
-          >
-            Shop the collection
-            <span aria-hidden="true"> &rarr;</span>
-          </a>
-        </div>
-
-        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-          {trendingProducts.map((product) => (
-            <div key={product.id} className="group relative">
-              <div className="h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80">
-                <img
-                  src={product.imageSrc}
-                  alt={product.imageAlt}
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-              <h3 className="mt-4 text-sm text-gray-700">
-                <a href={product.href}>
-                  <span className="absolute inset-0" />
-                  {product.name}
-                </a>
-              </h3>
-              <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-              <p className="mt-1 text-sm font-medium text-gray-900">
-                {product.price}
+    <div className="bg-gradient-to-r from-indigo-50 to-cyan-50 mt-20 relative">
+      <div className="absolute inset-x-0 bottom-0 ">
+        <svg
+          viewBox="0 0 224 12"
+          fill="currentColor"
+          className="w-full -mb-1 text-white "
+          preserveAspectRatio="none"
+        >
+          <path d="M0,0 C48.8902582,6.27314026 86.2235915,9.40971039 112,9.40971039 C137.776408,9.40971039 175.109742,6.27314026 224,0 L224,12.0441132 L0,12.0441132 L0,0 Z" />
+        </svg>
+      </div>
+      <div className="mx-auto max-w-7xl py-24 sm:px-2 sm:py-32 lg:px-4">
+        <div className="mx-auto max-w-2xl px-4 lg:max-w-none">
+          <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
+            <div>
+              <h2 className="text-4xl font-bold tracking-tight text-gray-900">
+                Our Commitment to Exceptional Customer Service
+              </h2>
+              <p className="mt-4 text-gray-500">
+                At OurStore, we prioritize providing outstanding customer
+                service at every step of your shopping journey. We believe in
+                building long-lasting relationships with our customers, and your
+                satisfaction is our top priority. Our dedicated team is here to
+                assist you with any questions, concerns, or issues you may
+                encounter. Whether you need help finding the perfect product,
+                assistance with your order, or support after your purchase,
+                we're here to help, 24/7.
               </p>
             </div>
-          ))}
-        </div>
 
-        <div className="mt-8 text-sm md:hidden">
-          <a href="#" className="font-medium text-cyan-600 hover:text-cyan-500">
-            Shop the collection
-            <span aria-hidden="true"> &rarr;</span>
-          </a>
+            <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg bg-gray-100">
+              <img
+                src="https://tailwindui.com/img/ecommerce-images/incentives-07-hero.jpg"
+                alt=""
+                className="object-cover object-center"
+              />
+            </div>
+          </div>
+          <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+            {incentives.map((incentive) => (
+              <div key={incentive.name} className="sm:flex lg:block">
+                <div className="sm:flex-shrink-0">
+                  <img className="h-16 w-16" src={incentive.imageSrc} alt="" />
+                </div>
+                <div className="mt-4 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6">
+                  <h3 className="text-sm font-medium text-gray-900">
+                    {incentive.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-500">
+                    {incentive.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

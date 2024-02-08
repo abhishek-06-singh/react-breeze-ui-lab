@@ -8,6 +8,7 @@ import { FaStar } from "react-icons/fa";
 import Offers from "./smallComponents/Offers";
 import ShimmerLoader from "./shimmerUi/ShimmerLoader";
 import { useNavigate } from "react-router-dom";
+import Statstwo from "./smallComponents/Statstwo";
 
 const ProductListingAccessories = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const ProductListingAccessories = () => {
   return (
     <>
       <Header />
-      <Stats />
+      <Statstwo />
       <div className="bg-white">
         <h1 className="flex items-center text-center justify-center mt-10 text-3xl font-bold text-cyan-900">
           Products.

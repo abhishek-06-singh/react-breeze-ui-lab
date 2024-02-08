@@ -2,21 +2,21 @@ import React from "react";
 const collections = [
   {
     name: "Women's",
-    href: "#",
+    href: "/products/women",
     imageSrc:
       "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-01.jpg",
     imageAlt: "Woman wearing a comfortable cotton t-shirt.",
   },
   {
     name: "Men's",
-    href: "#",
+    href: "/products/men",
     imageSrc:
       "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-02.jpg",
     imageAlt: "Man wearing a comfortable and casual cotton t-shirt.",
   },
   {
-    name: "Desk Accessories",
-    href: "#",
+    name: "Electronics",
+    href: "/products/electronic",
     imageSrc:
       "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-03.jpg",
     imageAlt:
