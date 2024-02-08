@@ -14,6 +14,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Checkout from "./components/shopping/Checkout";
 
 import OrderSummery from "./components/shopping/OrderSummery";
+import ProductListingWomen from "./components/ProductListingWomen";
+import ProductListingMen from "./components/ProductListingMen";
+import ProductListingAccessories from "./components/ProductListingAccessories";
+import ProductListingElectronic from "./components/ProductListingElectronic";
 
 const App = () => {
   return (
@@ -36,6 +40,16 @@ const App = () => {
           <Route path="/" element={<SignIn />} />
           <Route path="/home" element={<Home />} />
           <Route path="/products" element={<ProductListing />} />
+          <Route path="/products/women" element={<ProductListingWomen />} />
+          <Route path="/products/men" element={<ProductListingMen />} />
+          <Route
+            path="/products/accessories"
+            element={<ProductListingAccessories />}
+          />
+          <Route
+            path="/products/electronic"
+            element={<ProductListingElectronic />}
+          />
           <Route path="/product-overview/:id" element={<ProductOverview />} />
           <Route path="/bag" element={<ShoppingBag />} />
           <Route path="/checkout" element={<Checkout />} />

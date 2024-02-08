@@ -8,13 +8,14 @@ import { IoMdArchive } from "react-icons/io";
 import { useSelector } from "react-redux";
 import blackimage from "../assets/white.png";
 import Collection from "./Collection ";
+import { CiLogout } from "react-icons/ci";
 import {
   setEmail,
   setPassword,
   selectEmail,
   selectPassword,
 } from "../store/authSlice";
-
+import { selectGoogleEmail } from "../store/googleAuthSlice";
 import { useNavigate } from "react-router-dom";
 const navigation = {
   categories: [
@@ -23,7 +24,7 @@ const navigation = {
       featured: [
         {
           name: "New Arrivals",
-          href: "#",
+          href: "/products/women",
           imageSrc:
             "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
           imageAlt:
@@ -31,7 +32,7 @@ const navigation = {
         },
         {
           name: "Basic Tees",
-          href: "#",
+          href: "/products/women",
           imageSrc:
             "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
           imageAlt:
@@ -39,7 +40,7 @@ const navigation = {
         },
         {
           name: "Accessories",
-          href: "#",
+          href: "/products/accessories",
           imageSrc:
             "https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg",
           imageAlt:
@@ -47,7 +48,7 @@ const navigation = {
         },
         {
           name: "Carry",
-          href: "#",
+          href: "/products/accessories",
           imageSrc:
             "https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg",
           imageAlt:
@@ -60,7 +61,7 @@ const navigation = {
       featured: [
         {
           name: "New Arrivals",
-          href: "#",
+          href: "/products/men",
           imageSrc:
             "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg",
           imageAlt:
@@ -68,14 +69,14 @@ const navigation = {
         },
         {
           name: "Basic Tees",
-          href: "#",
+          href: "/products/men",
           imageSrc:
             "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg",
           imageAlt: "Model wearing light heather gray t-shirt.",
         },
         {
           name: "Accessories",
-          href: "#",
+          href: "/products/men",
           imageSrc:
             "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg",
           imageAlt:
@@ -83,7 +84,7 @@ const navigation = {
         },
         {
           name: "Carry",
-          href: "#",
+          href: "/products/men",
           imageSrc:
             "https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg",
           imageAlt:
@@ -93,7 +94,7 @@ const navigation = {
     },
   ],
   pages: [
-    { name: "Electronics", href: "#" },
+    { name: "Electronic", href: "/products/electronic" },
     { name: "Shopping Bag", href: "/bag" },
   ],
 };
@@ -104,9 +105,14 @@ function classNames(...classes) {
 const Header = () => {
   const navigate = useNavigate();
   const email = useSelector(selectEmail);
+  const googleEmail = useSelector(selectGoogleEmail);
   const [open, setOpen] = useState(false);
   const cartItemsCount = useSelector((state) => state.cart.totalItems);
   const cartItems = useSelector((state) => state.cart.items);
+
+  const handleLogout = () => {
+    navigate("/");
+  };
 
   return (
     <>
@@ -121,7 +127,7 @@ const Header = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            {/* <div className="fixed inset-0 bg-black bg-opacity-25" /> */}
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
           <div className="fixed inset-0 z-40 flex">
@@ -209,7 +215,10 @@ const Header = () => {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <span className="-m-2 block p-2 font-medium text-gray-900">
+                    <span
+                      className="-m-2 block p-2 font-medium text-gray-900"
+                      onClick={() => navigate("/products/electronic")}
+                    >
                       Electronics
                     </span>
                     <span
@@ -223,9 +232,18 @@ const Header = () => {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <p>{email}</p>
+                    <p>{email || googleEmail}</p>
                   </div>
-                  {!email && (
+                  {email || googleEmail ? (
+                    <div className="flow-root">
+                      <button
+                        onClick={handleLogout}
+                        className="-m-2 block p-2 font-medium text-gray-900"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  ) : (
                     <div className="flow-root">
                       <a
                         href="#"
@@ -351,7 +369,10 @@ const Header = () => {
                         </Popover>
                       ))}
 
-                      <span className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                      <span
+                        className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                        onClick={() => navigate("/products/electronic")}
+                      >
                         Electronics
                       </span>
                       <span
@@ -376,13 +397,6 @@ const Header = () => {
                   </button>
 
                   {/* Search */}
-                  <a
-                    href="#"
-                    className="ml-2 p-2 text-gray-400 hover:text-gray-500"
-                  >
-                    <span className="sr-only">Search</span>
-                    <FaMagnifyingGlass className="h-6 w-6" aria-hidden="true" />
-                  </a>
                 </div>
 
                 {/* Logo (lg-) */}
@@ -394,22 +408,6 @@ const Header = () => {
                 <div className="flex flex-1 items-center justify-end">
                   <div className="flex items-center lg:ml-8">
                     {/* Help */}
-                    <a
-                      href="#"
-                      className="p-2 text-gray-400 hover:text-gray-500 lg:hidden"
-                    >
-                      <span className="sr-only">Help</span>
-                      <FaQuestionCircle
-                        className="h-6 w-6"
-                        aria-hidden="true"
-                      />
-                    </a>
-                    <a
-                      href="#"
-                      className="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block"
-                    >
-                      Help
-                    </a>
 
                     {/* Cart */}
 
@@ -486,6 +484,50 @@ const Header = () => {
                               </span>
                             </p>
                           </form>
+                        </Popover.Panel>
+                      </Transition>
+                    </Popover>
+                    <Popover className="  text-sm lg:block  z-50 hidden">
+                      <Popover.Button className="group  flex items-center p-2">
+                        <a
+                          href="#"
+                          className="group -m-2 flex items-center p-2"
+                        >
+                          <CiLogout
+                            className="h-6 w-6 flex-shrink-0 text-red-400 group-hover:text-red-500"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      </Popover.Button>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Popover.Panel className="absolute inset-x-0 top-10 mt-px bg-white pb-6 shadow-lg sm:px-2 lg:left-auto lg:right-0 lg:top-full lg:-mr-1.5 lg:mt-3 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
+                          {email || googleEmail ? (
+                            <div className="flex items-center text-center">
+                              <button
+                                onClick={handleLogout}
+                                className=" font-medium text-red-500"
+                              >
+                                Logout
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flow-root">
+                              <a
+                                href="#"
+                                className="-m-2 block p-2 font-medium text-gray-900"
+                              >
+                                Sign in
+                              </a>
+                            </div>
+                          )}
                         </Popover.Panel>
                       </Transition>
                     </Popover>

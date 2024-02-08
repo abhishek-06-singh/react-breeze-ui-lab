@@ -12,11 +12,13 @@ import {
   selectEmail,
   selectPassword,
 } from "../store/authSlice";
+import { setGoogleAuthData, selectGoogleAuth } from "../store/googleAuthSlice"; // Importing actions and selectors from the new slice
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const email = useSelector(selectEmail);
   const password = useSelector(selectPassword);
+  const googleAuth = useSelector(selectGoogleAuth); // Adding Google Auth state
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showLogo, setShowLogo] = useState(true);
@@ -32,8 +34,16 @@ const SignIn = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log("Form submitted! Redux state updated:", { email, password });
-    navigate("/home");
+    const isEmailPasswordLoginSuccessful = email && password;
+    const isGoogleLoginSuccessful =
+      googleAuth.email && googleAuth.name && googleAuth.imageUrl;
+
+    if (isEmailPasswordLoginSuccessful || isGoogleLoginSuccessful) {
+      console.log("Login successful! Redirecting to home page...");
+      navigate("/home");
+    } else {
+      console.log("Login failed. Please try again.");
+    }
   };
 
   useEffect(() => {
@@ -166,6 +176,15 @@ const SignIn = () => {
                           credentialResponse.credential
                         );
                         console.log(decoded);
+                        // Dispatch action to store Google login data
+                        dispatch(
+                          setGoogleAuthData({
+                            email: decoded.email,
+                            name: decoded.name,
+                            imageUrl: decoded.picture,
+                          })
+                        );
+                        navigate("/home");
                       }}
                       size="large"
                       onError={() => {
